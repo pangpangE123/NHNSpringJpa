@@ -31,8 +31,8 @@ class OrderItemRepositoryTest {
 
         // then
         assertThat(orderItem).isNotNull();
-        assertThat(orderItem.getPk().getOrderId()).isEqualTo(orderId);
-        assertThat(orderItem.getPk().getLineNumber()).isEqualTo(lineNumber);
+        assertThat(orderItem.getOrderId()).isEqualTo(orderId);
+        assertThat(orderItem.getLineNumber()).isEqualTo(lineNumber);
         assertThat(orderItem.getItemId()).isEqualTo(1L);
         assertThat(orderItem.getQuantity()).isEqualTo(3);
     }
