@@ -1,6 +1,8 @@
 package com.nhnacademy.springbootjpa.error;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.FieldError;
@@ -84,6 +86,23 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     /**
+     * 404 Not Found
+     * EmptyResultDataAccessException 공통 처리
+     */
+    @Nullable
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<Object> handleEmptyResultDataAccess(EmptyResultDataAccessException ex, WebRequest request) {
+        URI type = URI.create("/errors/not-found");
+        HttpStatusCode status = HttpStatus.NOT_FOUND;
+        String detail = "Resource not found.";
+
+        ProblemDetail body = createProblemDetail(ex, status, detail, null, null, request);
+        body.setType(type);
+
+        return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+    }
+
+    /**
      * 409 Conflict
      * IllegalStateException 공통 처리
      */
@@ -93,6 +112,23 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         URI type = URI.create("/errors/conflict");
         HttpStatusCode status = HttpStatus.CONFLICT;
         String detail = ex.getLocalizedMessage();
+
+        ProblemDetail body = createProblemDetail(ex, status, detail, null, null, request);
+        body.setType(type);
+
+        return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+    }
+
+    /**
+     * 409 Conflict
+     * DuplicateKeyException 공통 처리
+     */
+    @Nullable
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<Object> handleDuplicateKey(DuplicateKeyException ex, WebRequest request) {
+        URI type = URI.create("/errors/duplicate-key");
+        HttpStatusCode status = HttpStatus.CONFLICT;
+        String detail = "Duplicate key.";
 
         ProblemDetail body = createProblemDetail(ex, status, detail, null, null, request);
         body.setType(type);
