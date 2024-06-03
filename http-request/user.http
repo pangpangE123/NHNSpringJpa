@@ -1,3 +1,6 @@
+### Get user(id = admin)
+GET http://localhost:8080/users/admin
+
 ### Get user(id = nhn)
 GET http://localhost:8080/users/nhn
 
