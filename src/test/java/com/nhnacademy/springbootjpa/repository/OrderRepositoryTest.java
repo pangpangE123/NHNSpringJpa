@@ -34,4 +34,5 @@ class OrderRepositoryTest {
         assertThat(order.getOrderedAt()).isEqualTo(ZonedDateTime.parse("2018-08-23T10:30:00+09:00"));
     }
 
+
 }
