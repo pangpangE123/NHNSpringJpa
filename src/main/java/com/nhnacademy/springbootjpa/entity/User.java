@@ -15,6 +15,9 @@ public class User {
     @Id
     private String id;
 
+    @Setter
+    private int age;
+
     @Length(min = 3, max = 20)
     @NotNull
     @Setter

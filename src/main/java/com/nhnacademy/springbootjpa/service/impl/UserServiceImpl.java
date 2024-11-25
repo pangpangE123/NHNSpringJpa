@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User create(String id, String password) {
+    public User create(String id, int age ,String password) {
         if (userRepository.existsById(id)) {
             throw new IllegalStateException("User(id = " + id + ") already exists.");
         }
-        return userRepository.save(new User(id, password));
+        return userRepository.save(new User(id, age, password));
     }
 
     @Transactional
