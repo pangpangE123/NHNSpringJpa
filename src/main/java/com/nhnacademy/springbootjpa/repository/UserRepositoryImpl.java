@@ -30,21 +30,24 @@ public class UserRepositoryImpl implements UserRepository {
         return Objects.nonNull(user) && user.getId().equals(id);
     }
 
+    // TODO 4 쿼리 수정
     @Override
     public User getById(String id) {
         return jdbcTemplate.queryForObject(
-                "select id, password from `user` where id = ?1",
+                "select id, password, age from `user` where id = ?1",
                 new UserRowMapper(),
                 id
         );
     }
 
+    // TODO 4 쿼리 수정
     @Override
-    public boolean create(String id, String password) {
+    public boolean create(String id, String password,int age) {
         int result = jdbcTemplate.update(
-                "insert into `user` (id, password) values (?, ?)",
+                "insert into `user` (id, password, age) values (?, ?, ?)",
                 id,
-                password
+                password,
+                age
         );
         return result == 1;
     }
